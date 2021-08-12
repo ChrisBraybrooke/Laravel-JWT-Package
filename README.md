@@ -1,48 +1,26 @@
-# Laravel-Package-Template
-A template for creating laravel packages
+# Laravel Resource Server JWT Auth
+For use with an authentication server using Laravel Passport. This package will read the incoming JWT and authenticate the user.
 
 ## Installation
 
 ```
-git clone git@github.com:ChrisBraybrooke/Laravel-Package-Template.git package-name
-cd package-name
-git remote set-url origin new-url.git
-git push -u origin master
+composer require chrisbraybrooke/jwt
 ```
 
 ## Setup
-1. Open up `composer.json` and replace the name for the name of this package. You can also give it a description.
+1. Add the `ChrisBraybrooke\JWT\Traits\AuthenticatesWithAuthServer` trait to your `User` model, this contains a few methods that help create new users.
 
-2. Do a find and replace across the whole package (including the pre mentioned `composer.json` file) for `NAMESPACE_HERE` which should be replaced with the package name in PascalCase. i.e AwesomePackage.
+2. In your `.env` file add an `OAUTH_AUTH_SERVER_API_ENDPOINT` entry, this is the base api url on your authentication server, and will be used to pull the users information in when creating a new user. You also need a `OAUTH_PUBLIC_KEY` entry, this is your public key that is being used on the authentication server and will allow us to validate incoming JWTs.
 
-3. Open the `ServiceProvider.php` file and replace the string returned by `shortName` method with the name you put in the `composer.json`.
-
-4. If you need a config file, you should also rename the `config/chrisbraybrooke-package.php` filename with the string returned by `shortName`.
-
-## Working on Package
-You will need a 'host' project, this could be a blank laravel install or another project.
+3. Finally, you will need to change the api guard driver in your `config/auth.php` file - see below.
 
 ```
-cd host-project
-vim composer.json
+'api' => [
+    'driver' => 'jwt', // --> We have created a driver called jwt, make sure your driver is set to this.
+    'provider' => 'users',
+    'hash' => false,
+]
 ```
 
-Then paste the following anywhere in the file.
-
-```
-"repositories": {
-    "chrisbraybrooke/package-name": {
-        "type": "path",
-        "url": "package-url-on-filesystem",
-        "options": {
-            "symlink": true
-        }
-    }
-}
-```
-
-Finally install the package on the host project
-
-```
-composer require chrisbraybrooke/package-name
-```
+## Config
+You can publish the config file be running `php artisan vendor:publish --tag=jwt-config`

@@ -1,5 +1,5 @@
 {
-    "name": "chrisbraybrooke/chrisbraybrooke-package",
+    "name": "chrisbraybrooke/jwt",
     "description": "A package by Christian Braybrooke",
     "authors": [
         {
@@ -9,14 +9,16 @@
     ],
     "autoload": {
         "psr-4": {
-            "ChrisBraybrooke\\NAMESPACE_HERE\\": "src/"
+            "ChrisBraybrooke\\JWT\\": "src/"
         }
     },
-    "require": {},
+    "require": {
+        "firebase/php-jwt": "^5.4"
+    },
     "extra": {
         "laravel": {
             "providers": [
-                "ChrisBraybrooke\\NAMESPACE_HERE\\ServiceProvider"
+                "ChrisBraybrooke\\JWT\\ServiceProvider"
             ]
         }
     }
