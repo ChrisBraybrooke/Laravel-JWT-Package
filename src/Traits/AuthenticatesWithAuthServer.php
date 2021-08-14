@@ -3,6 +3,7 @@
 namespace ChrisBraybrooke\JWT\Traits;
 
 use ChrisBraybrooke\JWT\Exceptions\AuthServerResponseError;
+use ChrisBraybrooke\JWT\JwtTokenService;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 
@@ -41,6 +42,22 @@ trait AuthenticatesWithAuthServer
             array_merge(
                 Arr::except($userInfo, ['id']),
                 [config('jwt.jwt_uuid_key') => $userInfo['id']]
+            )
+        );
+    }
+
+    /**
+     * Determine whether the users current token has a particular scope.
+     * 
+     * @param  string $scope
+     * @return Boolean
+     */
+    public function tokenCan($scope)
+    {
+        $tokenService = new JwtTokenService;
+        return $tokenService->tokenCan(
+            $tokenService->getTokenFromRequest(
+                request()
             )
         );
     }

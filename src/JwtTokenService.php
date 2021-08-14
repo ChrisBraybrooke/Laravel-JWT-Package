@@ -45,6 +45,39 @@ class JwtTokenService
     }
 
     /**
+     * Get the scopes from the token
+     * 
+     * @param string $jwt
+     * @return string
+     * @throws InvalidTokenException|Throwable
+     */
+    public function getScopesFromToken(string $jwt): array
+    {
+        $payload = $this->decode($jwt);
+
+        throw_unless(is_array($payload->scopes), new InvalidTokenException('Scopes not found in JWT'));
+
+        return $payload->scopes;
+    }
+
+    /**
+     * Determine whether the token has a specific scope.
+     * 
+     * @param string $jwt
+     * @return bool
+     */
+    public function tokenCan(string $jwt): bool
+    {
+        foreach ($this->getScopesFromToken($jwt) as $scope) {
+            if (array_key_exists($scope, array_flip($this->getScopesFromToken($jwt)))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Decode the JWT.
      * 
      * @param string $jwt
