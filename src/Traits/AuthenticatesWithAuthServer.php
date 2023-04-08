@@ -23,6 +23,17 @@ trait AuthenticatesWithAuthServer
 
         throw_if($response->failed(), new AuthServerResponseError('Issue reaching authentication server!'));
 
+        return $this->authServerUserInfo($response);
+    }
+
+    /**
+     * Manipulate the auth server user info response.
+     *
+     * @param  Response $response
+     * @return array
+     */
+    public function authServerUserInfo($response)
+    {
         return $response->json();
     }
 
