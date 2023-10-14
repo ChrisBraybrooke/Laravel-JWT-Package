@@ -1,5 +1,6 @@
 <?php return array(
     'root' => array(
+<<<<<<< HEAD
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
         'type' => 'library',
@@ -7,12 +8,22 @@
         'aliases' => array(),
         'reference' => '5f97d1588bacc529a4ef61f0acb4e9281a8a2df0',
         'name' => 'chrisbraybrooke/jwt',
+=======
+        'name' => 'chrisbraybrooke/jwt',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '5f97d1588bacc529a4ef61f0acb4e9281a8a2df0',
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+>>>>>>> 23d3989ff606e7c13b8e62b915277d260d24eb50
         'dev' => true,
     ),
     'versions' => array(
         'chrisbraybrooke/jwt' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
+<<<<<<< HEAD
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -316,5 +327,22 @@
             'reference' => '87337c91b9dfacee02452244ee14ab3c43bc485a',
             'dev_requirement' => true,
         ),
+=======
+            'reference' => '5f97d1588bacc529a4ef61f0acb4e9281a8a2df0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'firebase/php-jwt' => array(
+            'pretty_version' => 'v5.4.0',
+            'version' => '5.4.0.0',
+            'reference' => 'd2113d9b2e0e349796e72d2a63cf9319100382d2',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../firebase/php-jwt',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+>>>>>>> 23d3989ff606e7c13b8e62b915277d260d24eb50
     ),
 );
