@@ -42,6 +42,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Auth Server Userinfo Endpoint
+    |--------------------------------------------------------------------------
+    |
+    | If we are creating new users (option above), which api endpoint should we
+    | call to fetch the user info.
+    |
+    */
+
+    'auth_server_client_check_endpoint' => env('OAUTH_AUTH_SERVER_API_ENDPOINT') . '/client-check',
+
+    /*
+    |--------------------------------------------------------------------------
     | Auth Public Key
     |--------------------------------------------------------------------------
     |

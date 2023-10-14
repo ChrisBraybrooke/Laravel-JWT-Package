@@ -51,9 +51,9 @@ class JwtTokenService
      * @return string
      * @throws InvalidTokenException|Throwable
      */
-    public function getScopesFromToken(string $jwt): array
+    public function getScopesFromToken(string $jwt, $validate = true): array
     {
-        $payload = $this->decode($jwt);
+        $payload = $this->decode($jwt, $validate);
 
         throw_unless(is_array($payload->scopes), new InvalidTokenException('Scopes not found in JWT'));
 
@@ -66,12 +66,10 @@ class JwtTokenService
      * @param string $jwt
      * @return bool
      */
-    public function tokenCan(string $jwt): bool
+    public function tokenCan(string $jwt, $scope, $validate = true): bool
     {
-        foreach ($this->getScopesFromToken($jwt) as $scope) {
-            if (array_key_exists($scope, array_flip($this->getScopesFromToken($jwt)))) {
-                return true;
-            }
+        if (array_key_exists($scope, array_flip($this->getScopesFromToken($jwt, $validate)))) {
+            return true;
         }
 
         return false;
@@ -84,7 +82,7 @@ class JwtTokenService
      * @return object
      * @throws InvalidTokenException
      */
-    public function decode(string $jwt): object
+    public function decode(string $jwt, $validate = true): object
     {
         $this->validateHeader($jwt);
 
@@ -102,7 +100,9 @@ class JwtTokenService
             throw new InvalidTokenException($e->getMessage());
         }
 
-        $this->validatePayload($payload);
+        if ($validate) {
+            $this->validatePayload($payload);
+        }
 
         return $payload;
     }

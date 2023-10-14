@@ -17,7 +17,7 @@ trait AuthenticatesWithAuthServer
      */
     public function getUserInfoFromAuthServer($bearerToken)
     {
-        $response = Http::withOptions(['verify' => false])
+        $response = Http::withOptions(['verify' => config('app.env') === 'production'])
             ->withToken($bearerToken)
             ->get(config('jwt.auth_server_userinfo_endpoint'));
 
@@ -69,7 +69,8 @@ trait AuthenticatesWithAuthServer
         return $tokenService->tokenCan(
             $tokenService->getTokenFromRequest(
                 request()
-            )
+            ),
+            $scope
         );
     }
 }

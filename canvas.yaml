@@ -1,0 +1,27 @@
+preset: package
+
+namespace: ChrisBraybrooke\JWT
+user-auth-provider: App\Models\User
+
+paths:
+  src: src
+  resource: resources
+
+factory:
+  path: database/factories
+
+migration:
+  path: database/migrations
+  prefix: ''
+
+console:
+  namespace: ChrisBraybrooke\JWT\Commands
+
+model:
+  namespace: ChrisBraybrooke\JWT\Models
+
+provider:
+  namespace: ChrisBraybrooke\JWT\Providers
+
+testing:
+  namespace: ChrisBraybrooke\JWT\Tests
