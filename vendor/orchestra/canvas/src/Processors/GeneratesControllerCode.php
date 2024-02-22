@@ -14,12 +14,12 @@ use Orchestra\Canvas\Core\GeneratesCode;
 class GeneratesControllerCode extends GeneratesCode
 {
     /**
-     * Build the class with the given name.
-     *
-     * Remove the base controller import if we are already in base namespace.
+     * Handle generating code.
      */
-    protected function buildClass(string $name): string
+    protected function generatingCode(string $stub, string $name): string
     {
+        $stub = parent::generatingCode($stub, $name);
+
         $controllerNamespace = $this->getNamespace($name);
 
         $rootNamespace = $this->rootNamespace();
@@ -34,13 +34,14 @@ class GeneratesControllerCode extends GeneratesCode
             $replace = $this->buildModelReplacements($replace);
         }
 
+        // Remove the base controller import if we are already in base namespace.
         $replace = array_merge($replace, [
             "use {$controllerNamespace}\Controller;\n" => '',
             "use {$rootNamespace}\Http\Controllers\Controller;" => "use {$rootNamespace}Http\Controllers\Controller;",
         ]);
 
         return str_replace(
-            array_keys($replace), array_values($replace), parent::buildClass($name)
+            array_keys($replace), array_values($replace), $stub
         );
     }
 
@@ -74,7 +75,6 @@ class GeneratesControllerCode extends GeneratesCode
      * Build the model replacement values.
      *
      * @param  array<string, string>  $replace
-     *
      * @return array<string, string>
      */
     protected function buildModelReplacements(array $replace): array
@@ -124,7 +124,6 @@ class GeneratesControllerCode extends GeneratesCode
      * Build the model replacement values.
      *
      * @param  string  $modelClass
-     *
      * @return array<string, string>
      */
     protected function buildFormRequestReplacements(array $replace, $modelClass)
@@ -167,7 +166,6 @@ class GeneratesControllerCode extends GeneratesCode
      * @param  string  $modelClass
      * @param  string  $storeRequestClass
      * @param  string  $updateRequestClass
-     *
      * @return array<int, string>
      */
     protected function generateFormRequests($modelClass, $storeRequestClass, $updateRequestClass)

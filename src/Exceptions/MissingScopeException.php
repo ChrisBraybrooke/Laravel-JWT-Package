@@ -1,6 +1,6 @@
 <?php
 
-namespace ChrisBraybrooke\JWT\Exceptions;
+namespace Velogik\CognitoAuth\Exceptions;
 
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Arr;

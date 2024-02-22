@@ -12,11 +12,23 @@ interface GeneratesCodeListener
     public function codeAlreadyExists(string $className);
 
     /**
+     * Handle generating code.
+     */
+    public function generatingCode(string $stub, string $className): string;
+
+    /**
      * Code successfully generated.
      *
      * @return mixed
      */
     public function codeHasBeenGenerated(string $className);
+
+    /**
+     * Run after code successfully generated.
+     *
+     * @return void
+     */
+    public function afterCodeHasBeenGenerated(string $className, string $path);
 
     /**
      * Get the stub file for the generator.

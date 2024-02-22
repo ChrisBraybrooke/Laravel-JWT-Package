@@ -51,7 +51,6 @@ abstract class Preset
      * Get configuration.
      *
      * @param  mixed|null  $default
-     *
      * @return mixed
      */
     public function config(?string $key = null, $default = null)
@@ -123,8 +122,24 @@ abstract class Preset
         return sprintf(
             '%s/%s',
             $this->basePath(),
-            $this->config('seeder.path', 'database/seeds')
+            $this->config('seeder.path', 'database/seeders')
         );
+    }
+
+    /**
+     * Database factory namespace.
+     */
+    public function factoryNamespace(): string
+    {
+        return $this->config('factory.namespace', 'Database\Factories');
+    }
+
+    /**
+     * Database seeder namespace.
+     */
+    public function seederNamespace(): string
+    {
+        return $this->config('seeder.path', 'Database\Seeders');
     }
 
     /**
@@ -132,10 +147,12 @@ abstract class Preset
      */
     public function addAdditionalCommands(Application $app): void
     {
-        foreach ($this->config('generators', []) as $generator) {
-            /** @var \Symfony\Component\Console\Command\Command $generator */
-            $app->add(new $generator($this));
-        }
+        tap($this->config('generators') ?? [], function ($generators) use ($app) {
+            foreach (Arr::wrap($generators) as $generator) {
+                /** @var class-string<\Symfony\Component\Console\Command\Command> $generator */
+                $app->add(new $generator($this));
+            }
+        });
     }
 
     /**

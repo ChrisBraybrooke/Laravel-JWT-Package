@@ -1,8 +1,8 @@
 <?php
 
-namespace ChrisBraybrooke\JWT;
+namespace Velogik\CognitoAuth;
 
-use ChrisBraybrooke\JWT\Exceptions\InvalidTokenException;
+use Velogik\CognitoAuth\Exceptions\InvalidTokenException;
 use Doctrine\Instantiator\Exception\UnexpectedValueException;
 use DomainException;
 use Firebase\JWT\BeforeValidException;
@@ -10,9 +10,9 @@ use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
 use Firebase\JWT\SignatureInvalidException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
+use CoderCat\JWKToPEM\JWKConverter;
 
 class JwtTokenService
 {
@@ -84,10 +84,18 @@ class JwtTokenService
      */
     public function decode(string $jwt, $validate = true): object
     {
+        $jwkConverter = new JWKConverter();
+
         $this->validateHeader($jwt);
 
+        $pem = $jwkConverter->toPEM(
+            $this->getJwk(
+                $this->decodeHeader($jwt)->kid
+            )
+        );
+
         try {
-            $payload = JWT::decode($jwt, config('jwt.auth_public_key'), ['RS256']);
+            $payload = JWT::decode($jwt, $pem, ['RS256']);
         } catch (
             InvalidArgumentException
             | UnexpectedValueException
@@ -122,14 +130,14 @@ class JwtTokenService
         }
 
         try {
-            $header = JWT::jsonDecode(JWT::urlsafeB64Decode($tks[0]));
+            $header = $this->decodeHeader($jwt);
         } catch (DomainException $e) {
             throw new InvalidTokenException($e->getMessage());
         }
 
-        // if (empty($header->kid)) {
-        //     throw new InvalidTokenException('No kid present in token header');
-        // }
+        if (empty($header->kid)) {
+            throw new InvalidTokenException('No kid present in token header');
+        }
 
         if (empty($header->alg)) {
             throw new InvalidTokenException('No alg present in token header');
@@ -138,6 +146,38 @@ class JwtTokenService
         if ($header->alg !== 'RS256') {
             throw new InvalidTokenException('The token alg is not RS256');
         }
+    }
+
+    /**
+     * Decode the header of the JWT.
+     * 
+     * @param string $jwt
+     * @return object
+     */
+    public function decodeHeader(string $jwt): object
+    {
+        $tks = explode('.', $jwt);
+        return JWT::jsonDecode(JWT::urlsafeB64Decode($tks[0]));
+    }
+
+    /**
+     * Get the JSON Web Keys from the Cognito User Pool.
+     * 
+     * @return array
+     */
+    public function getJwk(string $kid): array
+    {
+        $region = config('cognito.aws_region');
+        $userPoolId = config('cognito.user_pool_id');
+
+        return cache()->remember("cognito.{$region}.{$userPoolId}.jwks.{$kid}", 60 * 60 * 24, function () use ($region, $userPoolId, $kid) {
+            $jwk = json_decode(
+                file_get_contents("https://cognito-idp.{$region}.amazonaws.com/{$userPoolId}/.well-known/jwks.json"),
+                true
+            );
+
+            return collect($jwk['keys'] ?? [])->firstWhere('kid', $kid);
+        });
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace ChrisBraybrooke\JWT;
+namespace Velogik\CognitoAuth;
 
 use Illuminate\Auth\EloquentUserProvider;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -33,11 +33,11 @@ class JwtProviderRepository
     public function getJWTUser(string $uuid): ?Authenticatable
     {
         $model = $this->provider->createModel();
-        $user = $model->where(config('jwt.jwt_uuid_key'), $uuid)->first();
+        $user = $model->where(config('cognito.jwt_uuid_key'), $uuid)->first();
 
         if ($user) {
             return $user;
-        } elseif (config('jwt.create_new_users') && method_exists($model, 'createFromAuthServer')) {
+        } elseif (config('cognito.create_new_users') && method_exists($model, 'createFromAuthServer')) {
             return $model->createFromAuthServer(
                 request()->bearerToken()
             );

@@ -4,7 +4,7 @@ namespace Orchestra\Canvas\Commands;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Orchestra\Canvas\Processors\GeneratesCodeWithComponent;
+use Orchestra\Canvas\Core\GeneratesCodeWithComponent;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
@@ -78,14 +78,6 @@ class Component extends Generator
     <!-- Insert your component content -->
 </div>'
         );
-    }
-
-    /**
-     * Get the stub file for the generator.
-     */
-    public function getStubFile(): string
-    {
-        return $this->getStubFileFromPresetStorage($this->preset, $this->getStubFileName());
     }
 
     /**

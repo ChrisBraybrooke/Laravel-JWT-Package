@@ -1,8 +1,8 @@
 <?php
 
-namespace ChrisBraybrooke\JWT;
+namespace Velogik\CognitoAuth;
 
-use ChrisBraybrooke\JWT\Exceptions\MethodNotSupportedException;
+use Velogik\CognitoAuth\Exceptions\MethodNotSupportedException;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
@@ -22,12 +22,12 @@ class JwtGuard implements Guard
     /**
      * The provider repository instance.
      * 
-     * @var \ChrisBraybrooke\JWT\JwtProviderRepository
+     * @var \Velogik\CognitoAuth\JwtProviderRepository
      */
     protected $provider;
 
     /**
-     * @param \ChrisBraybrooke\JWT\JwtProviderRepository
+     * @param \Velogik\CognitoAuth\JwtProviderRepository
      * @param \Illuminate\Http\Request\Request  $request
      *
      * @return void

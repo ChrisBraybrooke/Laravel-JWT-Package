@@ -1,19 +1,21 @@
 {
-    "name": "chrisbraybrooke/jwt",
+    "name": "velogik/vgk-cognito-auth",
     "description": "A package by Christian Braybrooke",
     "authors": [
         {
             "name": "Christian Braybrooke",
-            "email": "chris@purplemountmedia.com"
+            "email": "christian.braybrooke@velogik.com"
         }
     ],
     "autoload": {
         "psr-4": {
-            "ChrisBraybrooke\\JWT\\": "src/"
+            "Velogik\\CognitoAuth\\": "src/"
         }
     },
     "require": {
-        "firebase/php-jwt": "^5.4"
+        "firebase/php-jwt": "^5.4",
+        "aws/aws-sdk-php-laravel": "~3.0",
+        "codercat/jwk-to-pem": "^1.1"
     },
     "require-dev": {
         "orchestra/canvas": "^6.4"
@@ -21,7 +23,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "ChrisBraybrooke\\JWT\\ServiceProvider"
+                "Velogik\\CognitoAuth\\ServiceProvider"
             ]
         }
     }

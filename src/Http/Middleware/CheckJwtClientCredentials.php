@@ -1,11 +1,11 @@
 <?php
 
-namespace ChrisBraybrooke\JWT\Http\Middleware;
+namespace Velogik\CognitoAuth\Http\Middleware;
 
-use ChrisBraybrooke\JWT\Exceptions\AuthServerResponseError;
-use ChrisBraybrooke\JWT\Exceptions\ClientRevokedError;
-use ChrisBraybrooke\JWT\Exceptions\MissingScopeException;
-use ChrisBraybrooke\JWT\JwtTokenService;
+use Velogik\CognitoAuth\Exceptions\AuthServerResponseError;
+use Velogik\CognitoAuth\Exceptions\ClientRevokedError;
+use Velogik\CognitoAuth\Exceptions\MissingScopeException;
+use Velogik\CognitoAuth\JwtTokenService;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -47,20 +47,20 @@ class CheckJwtClientCredentials
      */
     protected function checkTokenHasNotBeenRevoked($id, $jwt)
     {
-        $response = Http::withOptions(['verify' => config('app.env') === 'production'])
-            ->withToken($jwt)
-            ->post(config('jwt.auth_server_client_check_endpoint'), [
-                'id' => $id
-            ]);
+        // $response = Http::withOptions(['verify' => config('app.env') === 'production'])
+        //     ->withToken($jwt)
+        //     ->post(config('jwt.auth_server_client_check_endpoint'), [
+        //         'id' => $id
+        //     ]);
 
-        if ($response->successful()) {
-            if ($response->json()['valid'] ?? false) {
-                return;
-            }
-        } else {
-            throw new AuthServerResponseError('Cannot verify client revocation status with auth server!');
-        }
+        // if ($response->successful()) {
+        //     if ($response->json()['valid'] ?? false) {
+        //         return;
+        //     }
+        // } else {
+        //     throw new AuthServerResponseError('Cannot verify client revocation status with auth server!');
+        // }
 
-        throw new ClientRevokedError('Client has been revoked!');
+        // throw new ClientRevokedError('Client has been revoked!');
     }
 }

@@ -3,7 +3,7 @@
 namespace Orchestra\Canvas\Commands;
 
 use Illuminate\Support\Str;
-use Orchestra\Canvas\Processors\GeneratesCodeWithMarkdown;
+use Orchestra\Canvas\Core\GeneratesCodeWithMarkdown;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
@@ -54,14 +54,6 @@ class Mail extends Generator
     }
 
     /**
-     * Get the stub file for the generator.
-     */
-    public function getStubFile(): string
-    {
-        return $this->getStubFileFromPresetStorage($this->preset, $this->getStubFileName());
-    }
-
-    /**
      * Get the stub file name for the generator.
      */
     public function getStubFileName(): string
@@ -106,7 +98,7 @@ class Mail extends Generator
         $this->files->put($path, file_get_contents(__DIR__.'/../../storage/laravel/markdown.stub'));
     }
 
-        /**
+    /**
      * Get the view name.
      *
      * @return string

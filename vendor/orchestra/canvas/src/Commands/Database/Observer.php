@@ -3,7 +3,7 @@
 namespace Orchestra\Canvas\Commands\Database;
 
 use Orchestra\Canvas\Commands\Generator;
-use Orchestra\Canvas\Processors\GeneratesObserverCode;
+use Orchestra\Canvas\Core\GeneratesCodeWithEloquent;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
@@ -37,15 +37,7 @@ class Observer extends Generator
      *
      * @var string
      */
-    protected $processor = GeneratesObserverCode::class;
-
-    /**
-     * Get the stub file for the generator.
-     */
-    public function getStubFile(): string
-    {
-        return $this->getStubFileFromPresetStorage($this->preset, $this->getStubFileName());
-    }
+    protected $processor = GeneratesCodeWithEloquent::class;
 
     /**
      * Get the stub file name for the generator.

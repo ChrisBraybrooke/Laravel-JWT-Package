@@ -3,7 +3,7 @@
 namespace Orchestra\Canvas\Commands;
 
 use Illuminate\Support\Str;
-use Orchestra\Canvas\Processors\GeneratesCodeWithMarkdown;
+use Orchestra\Canvas\Core\GeneratesCodeWithMarkdown;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
@@ -59,14 +59,6 @@ class Notification extends Generator
     public function getPublishedStubFileName(): ?string
     {
         return $this->getStubFileName();
-    }
-
-    /**
-     * Get the stub file for the generator.
-     */
-    public function getStubFile(): string
-    {
-        return $this->getStubFileFromPresetStorage($this->preset, $this->getStubFileName());
     }
 
     /**

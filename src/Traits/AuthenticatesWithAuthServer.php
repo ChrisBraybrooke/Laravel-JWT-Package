@@ -1,9 +1,9 @@
 <?php
 
-namespace ChrisBraybrooke\JWT\Traits;
+namespace Velogik\CognitoAuth\Traits;
 
-use ChrisBraybrooke\JWT\Exceptions\AuthServerResponseError;
-use ChrisBraybrooke\JWT\JwtTokenService;
+use Velogik\CognitoAuth\Exceptions\AuthServerResponseError;
+use Velogik\CognitoAuth\JwtTokenService;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 
@@ -15,26 +15,27 @@ trait AuthenticatesWithAuthServer
      * @param  string $bearerToken
      * @return array
      */
-    public function getUserInfoFromAuthServer($bearerToken)
+    public function getUserInfoFromAuthServer($bearerToken): array
     {
-        $response = Http::withOptions(['verify' => config('app.env') === 'production'])
-            ->withToken($bearerToken)
-            ->get(config('jwt.auth_server_userinfo_endpoint'));
+        $cognito = \AWS::createClient('cognito-idp');
+        $user = $cognito->getUser([
+            'AccessToken' => $bearerToken
+        ]);
 
-        throw_if($response->failed(), new AuthServerResponseError('Issue reaching authentication server!'));
+        dd($user);
 
-        return $this->authServerUserInfo($response);
+        return $this->authServerUserInfo($user);
     }
 
     /**
      * Manipulate the auth server user info response.
      *
-     * @param  Response $response
+     * @param  array $response
      * @return array
      */
     public function authServerUserInfo($response)
     {
-        return $response->json();
+        return $response;
     }
 
     /**

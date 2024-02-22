@@ -1,6 +1,6 @@
 <?php
 
-namespace ChrisBraybrooke\JWT;
+namespace Velogik\CognitoAuth;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +16,7 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->handleConfigs();
 
-        Auth::extend('jwt', function ($app, $name, array $config) {
+        Auth::extend('cognito', function ($app, $name, array $config) {
             return new JwtGuard(
                 new JwtProviderRepository(
                     Auth::createUserProvider($config['provider'])                    
@@ -34,7 +34,7 @@ class ServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../config/jwt.php', 'jwt'
+            __DIR__.'/../config/cognito.php', 'cognito'
         );
     }
 
@@ -46,7 +46,7 @@ class ServiceProvider extends BaseServiceProvider
     private function handleConfigs()
     {
         $this->publishes([
-            __DIR__.'/../config/jwt.php' => config_path('jwt.php')
-        ], 'jwt-config');
+            __DIR__.'/../config/cognito.php' => config_path('cognito.php')
+        ], 'cognito-config');
     }
 }

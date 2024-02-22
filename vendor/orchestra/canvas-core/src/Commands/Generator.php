@@ -73,15 +73,23 @@ abstract class Generator extends Command implements GeneratesCodeListener
     /**
      * Execute the command.
      *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     *
      * @return int 0 if everything went fine, or an exit code
+     *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $force = $this->hasOption('force') && $this->option('force') === true;
 
         return $this->generateCode($force);
+    }
+
+    /**
+     * Handle generating code.
+     */
+    public function generatingCode(string $stub, string $className): string
+    {
+        return $stub;
     }
 
     /**
@@ -102,6 +110,16 @@ abstract class Generator extends Command implements GeneratesCodeListener
         $this->info($this->type.' created successfully.');
 
         return 0;
+    }
+
+    /**
+     * Run after code successfully generated.
+     *
+     * @return void
+     */
+    public function afterCodeHasBeenGenerated(string $className, string $path)
+    {
+        //
     }
 
     /**
