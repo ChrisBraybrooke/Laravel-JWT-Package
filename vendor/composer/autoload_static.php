@@ -22,17 +22,12 @@ class ComposerStaticInit81ced833eeb9b6feac960abab643d142
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'b067bc7112e384b61c701452d53a14a8' => __DIR__ . '/..' . '/mtdowling/jmespath.php/src/JmesPath.php',
         '8a9dc1de0ca7e01f3e08231539562f61' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/functions.php',
-        'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         'v' => 
         array (
             'voku\\' => 5,
-        ),
-        'p' => 
-        array (
-            'phpseclib3\\' => 11,
         ),
         'V' => 
         array (
@@ -62,7 +57,6 @@ class ComposerStaticInit81ced833eeb9b6feac960abab643d142
             'Psr\\Http\\Client\\' => 16,
             'Psr\\Container\\' => 14,
             'Psr\\Clock\\' => 10,
-            'ParagonIE\\ConstantTime\\' => 23,
         ),
         'O' => 
         array (
@@ -98,7 +92,6 @@ class ComposerStaticInit81ced833eeb9b6feac960abab643d142
         ),
         'C' => 
         array (
-            'CoderCat\\JWKToPEM\\' => 18,
             'Carbon\\Doctrine\\' => 16,
             'Carbon\\' => 7,
         ),
@@ -113,10 +106,6 @@ class ComposerStaticInit81ced833eeb9b6feac960abab643d142
         'voku\\' => 
         array (
             0 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
-        ),
-        'phpseclib3\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
         ),
         'Velogik\\CognitoAuth\\' => 
         array (
@@ -199,10 +188,6 @@ class ComposerStaticInit81ced833eeb9b6feac960abab643d142
         array (
             0 => __DIR__ . '/..' . '/psr/clock/src',
         ),
-        'ParagonIE\\ConstantTime\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src',
-        ),
         'Orchestra\\Canvas\\Core\\' => 
         array (
             0 => __DIR__ . '/..' . '/orchestra/canvas-core/src',
@@ -260,10 +245,6 @@ class ComposerStaticInit81ced833eeb9b6feac960abab643d142
         'Doctrine\\Inflector\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Inflector',
-        ),
-        'CoderCat\\JWKToPEM\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/codercat/jwk-to-pem/src',
         ),
         'Carbon\\Doctrine\\' => 
         array (

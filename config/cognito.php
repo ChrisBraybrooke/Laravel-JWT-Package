@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'jwt_uuid_key' => 'auth_uuid',
+    'auth_id_key' => 'cognito_id',
 
     /*
     |--------------------------------------------------------------------------
@@ -26,27 +26,5 @@ return [
     |
     */
 
-    'create_new_users' => true,
-
-    /*
-    |--------------------------------------------------------------------------
-    | AWS Region
-    |--------------------------------------------------------------------------
-    |
-    | The AWS region in which your Cognito user pool is located.
-    |
-    */
-
-    'aws_region' => env('AWS_REGION', 'us-east-1'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Cognito User Pool ID
-    |--------------------------------------------------------------------------
-    |
-    | The ID of the Cognito user pool you want to use for authentication.
-    |
-    */
-
-    'user_pool_id' => env('AWS_COGNITO_USER_POOL_ID', ''),
+    'create_new_users' => true
 ];

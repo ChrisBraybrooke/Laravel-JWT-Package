@@ -8,7 +8,7 @@ composer require velogik/vgk-cognito-auth
 ```
 
 ## Setup
-1. Add the `Velogik\CognitoAuth\Traits\AuthenticatesWithAuthServer` trait to your `User` model, this contains a few methods that help create new users.
+1. Add the `Velogik\CognitoAuth\Traits\AuthenticatesWithCognito` trait to your `User` model, this contains a few methods that help create new users.
 
 <!-- 2. In your `.env` file add an `OAUTH_AUTH_SERVER_API_ENDPOINT` entry, this is the base api url on your authentication server, and will be used to pull the users information in when creating a new user. You also need a `OAUTH_PUBLIC_KEY` entry, this is your public key that is being used on the authentication server and will allow us to validate incoming JWTs. -->
 

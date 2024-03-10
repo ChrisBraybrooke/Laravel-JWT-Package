@@ -8,11 +8,11 @@ use DomainException;
 use Firebase\JWT\BeforeValidException;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
+use Firebase\JWT\JWK;
 use Firebase\JWT\SignatureInvalidException;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
-use CoderCat\JWKToPEM\JWKConverter;
 
 class JwtTokenService
 {
@@ -84,18 +84,10 @@ class JwtTokenService
      */
     public function decode(string $jwt, $validate = true): object
     {
-        $jwkConverter = new JWKConverter();
-
         $this->validateHeader($jwt);
 
-        $pem = $jwkConverter->toPEM(
-            $this->getJwk(
-                $this->decodeHeader($jwt)->kid
-            )
-        );
-
         try {
-            $payload = JWT::decode($jwt, $pem, ['RS256']);
+            $payload = JWT::decode($jwt, JWK::parseKeySet($this->getJwks()), ['RS256']);
         } catch (
             InvalidArgumentException
             | UnexpectedValueException
@@ -165,18 +157,18 @@ class JwtTokenService
      * 
      * @return array
      */
-    public function getJwk(string $kid): array
+    public function getJwks(): array
     {
-        $region = config('cognito.aws_region');
-        $userPoolId = config('cognito.user_pool_id');
+        $region = config('services.cognito.aws_region');
+        $userPoolId = config('services.cognito.user_pool_id');
 
-        return cache()->remember("cognito.{$region}.{$userPoolId}.jwks.{$kid}", 60 * 60 * 24, function () use ($region, $userPoolId, $kid) {
-            $jwk = json_decode(
+        return cache()->remember("cognito.{$region}.{$userPoolId}.jwks", 60 * 60 * 24, function () use ($region, $userPoolId) {
+            $jwks = json_decode(
                 file_get_contents("https://cognito-idp.{$region}.amazonaws.com/{$userPoolId}/.well-known/jwks.json"),
                 true
             );
 
-            return collect($jwk['keys'] ?? [])->firstWhere('kid', $kid);
+            return $jwks;
         });
     }
 
@@ -190,8 +182,6 @@ class JwtTokenService
      */
     public function validatePayload(object $payload): void
     {
-        if (!Uuid::isValid($payload->sub)) {
-            throw new InvalidTokenException('Invalid token attributes. Parameters "sub" must be a UUID.');
-        }
+        // 
     }
 }

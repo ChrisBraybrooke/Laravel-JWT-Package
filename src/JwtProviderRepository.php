@@ -33,7 +33,7 @@ class JwtProviderRepository
     public function getJWTUser(string $uuid): ?Authenticatable
     {
         $model = $this->provider->createModel();
-        $user = $model->where(config('cognito.jwt_uuid_key'), $uuid)->first();
+        $user = $model->where(config('cognito.auth_id_key'), $uuid)->first();
 
         if ($user) {
             return $user;

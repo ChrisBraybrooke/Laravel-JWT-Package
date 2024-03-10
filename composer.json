@@ -14,8 +14,7 @@
     },
     "require": {
         "firebase/php-jwt": "^5.4",
-        "aws/aws-sdk-php-laravel": "~3.0",
-        "codercat/jwk-to-pem": "^1.1"
+        "aws/aws-sdk-php-laravel": "~3.0"
     },
     "require-dev": {
         "orchestra/canvas": "^6.4"
