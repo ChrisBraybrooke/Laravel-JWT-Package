@@ -15,7 +15,7 @@ class JwtGuard implements Guard
     /**
      * The request instance.
      *
-     * @var \Illuminate\Http\Request\Request
+     * @var \Illuminate\Http\Request
      */
     protected $request;
 
@@ -28,7 +28,7 @@ class JwtGuard implements Guard
 
     /**
      * @param \ChrisBraybrooke\JWT\JwtProviderRepository
-     * @param \Illuminate\Http\Request\Request  $request
+     * @param \Illuminate\Http\Request  $request
      *
      * @return void
      */

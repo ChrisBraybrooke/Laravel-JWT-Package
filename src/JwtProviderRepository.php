@@ -28,7 +28,7 @@ class JwtProviderRepository
      * Get the user from our local DB.
      * 
      * @param string $uuid
-     * @return \Illuminate\Contracts\Auth\Authenticatable\Authenticatable | null
+     * @return \Illuminate\Contracts\Auth\Authenticatable | null
      */
     public function getJWTUser(string $uuid): ?Authenticatable
     {
