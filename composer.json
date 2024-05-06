@@ -1,5 +1,6 @@
 {
     "name": "chrisbraybrooke/jwt",
+    "license": "MIT",
     "description": "A package by Christian Braybrooke",
     "authors": [
         {
